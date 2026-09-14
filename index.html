@@ -545,7 +545,9 @@ window.addEventListener('scroll',()=>{cur=Math.round(window.scrollY/window.inner
 /* === VIDEO DEMO: parte desde cero al llegar a la lámina, se pausa al salir; clic = pausa/reanuda === */
 const demo=document.getElementById('demo');
 if(demo){
-  new IntersectionObserver(([e])=>{ if(e.isIntersecting){demo.currentTime=0;demo.play().catch(()=>{})} else demo.pause() },{threshold:.6}).observe(demo);
+  const RITMO=2/3;                                   // 46,5 s → 70 s: se lee con calma, igual que el GIF
+  demo.defaultPlaybackRate=demo.playbackRate=RITMO;
+  new IntersectionObserver(([e])=>{ if(e.isIntersecting){demo.currentTime=0;demo.playbackRate=RITMO;demo.play().catch(()=>{})} else demo.pause() },{threshold:.6}).observe(demo);
   demo.addEventListener('click',()=>demo.paused?demo.play():demo.pause());
 }
 </script>
